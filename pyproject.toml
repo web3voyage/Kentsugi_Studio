@@ -1,7 +1,8 @@
 [project]
 name = "kentsugi"
 version = "0.1.0"
-description = "Prompt-driven 3D shot authoring: declarative scene documents rendered to video."
+description = "A proprietary prompt-to-3D production engine with semantic object generation, deterministic planning, and cinematic Blender rendering."
+license = { text = "Proprietary - All Rights Reserved" }
 requires-python = ">=3.11"
 dependencies = []
 

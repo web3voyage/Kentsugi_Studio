@@ -2,6 +2,8 @@
   "name": "kentsugi-studio",
   "version": "0.1.0",
   "private": true,
+  "description": "Proprietary web studio for Kentsugi's prompt-to-3D planning and rendering engine.",
+  "license": "UNLICENSED",
   "engines": {
     "node": ">=22.13.0"
   },

@@ -1,9 +1,18 @@
 # Kentsugi
 
+> **Proprietary software — Copyright © 2026 web3voyage. All rights reserved.**
+
+![Kentsugi Studio banner](studio/public/kentsugi-banner.svg)
+
 Kentsugi is a prompt-driven 3D production engine. It turns natural-language
 intent into validated, declarative scene and object data, solves layout and
 timing outside Blender, and renders the result through a tightly bounded
 Blender backend.
+
+**Repository description:** A sophisticated prompt-to-3D production platform
+with semantic object generation, trusted procedural assets, deterministic scene
+planning, cinematic Blender rendering, versioned knowledge, and a web-based
+creative studio.
 
 The merged build includes the object-generation engine, trusted blueprints and
 asset recipes, versioned review knowledge, a prompt/job API, procedural product
@@ -167,3 +176,11 @@ Cycles CPU rendering is slow.
 
 The Studio production build requires its Node packages to be installed. Run
 `npm run build` from `studio` after `npm install` completes successfully.
+
+## License
+
+Kentsugi Studio is proprietary software and is not open source. No permission
+is granted to copy, modify, redistribute, sublicense, sell, or create derivative
+works without prior written authorization from web3voyage. See [LICENSE](LICENSE)
+for the complete terms. Third-party components and assets retain their own
+licenses.
