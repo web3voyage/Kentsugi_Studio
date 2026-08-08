@@ -1,0 +1,245 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kentsugi.dev/schema/scene-0.1.0.json",
+  "title": "Kentsugi Scene Document",
+  "description": "A declarative, engine-agnostic description of a 3D shot. This file is the contract sent to the language model as a structured-output schema; it is deliberately strict so that malformed scenes fail at parse time rather than at render time.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["kentsugi_version", "environment", "objects", "camera", "render"],
+  "properties": {
+    "kentsugi_version": {
+      "type": "string",
+      "const": "0.1.0"
+    },
+    "title": {
+      "type": "string",
+      "maxLength": 200,
+      "description": "Human-readable shot name."
+    },
+    "environment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["preset", "time_of_day"],
+      "properties": {
+        "preset": {
+          "enum": ["city", "interior_room", "open_field", "studio", "void"],
+          "description": "Coarse setting. 'studio' adds a product stage; 'void' renders ground plane only."
+        },
+        "time_of_day": {
+          "enum": ["dawn", "day", "dusk", "night"]
+        },
+        "weather": {
+          "enum": ["clear", "overcast", "rain", "fog"],
+          "default": "clear"
+        },
+        "ground_material": {
+          "enum": ["asphalt", "concrete", "grass", "wood", "none"],
+          "default": "concrete"
+        }
+      }
+    },
+    "objects": {
+      "type": "array",
+      "maxItems": 64,
+      "items": { "$ref": "#/$defs/object" }
+    },
+    "actions": {
+      "type": "array",
+      "maxItems": 64,
+      "default": [],
+      "items": { "$ref": "#/$defs/action" }
+    },
+    "camera": { "$ref": "#/$defs/camera" },
+    "render": { "$ref": "#/$defs/render" }
+  },
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]{0,47}$",
+      "description": "Lowercase snake_case. Used as a key, never as a filesystem path."
+    },
+    "distance": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 500,
+      "description": "Metres."
+    },
+    "object": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "asset", "placement"],
+      "properties": {
+        "id": { "$ref": "#/$defs/identifier" },
+        "asset": {
+          "$ref": "#/$defs/identifier",
+          "description": "Must name an entry in the asset catalog. Never a file path."
+        },
+        "placement": { "$ref": "#/$defs/placement" },
+        "facing": {
+          "oneOf": [
+            { "$ref": "#/$defs/identifier" },
+            { "type": "number", "minimum": -360, "maximum": 360 }
+          ],
+          "description": "Another object's id to face, or an absolute yaw in degrees (0 = +Y / north)."
+        },
+        "scale": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 20,
+          "default": 1
+        },
+        "appearance": { "$ref": "#/$defs/appearance" }
+      }
+    },
+    "color": {
+      "description": "A common colour name, #RGB/#RGBA/#RRGGBB/#RRGGBBAA hex string, or normalised RGB/RGBA components.",
+      "oneOf": [
+        {
+          "enum": ["black", "white", "gray", "grey", "silver", "red", "dark_red", "crimson", "orange", "yellow", "gold", "green", "lime", "olive", "teal", "cyan", "blue", "navy", "purple", "magenta", "pink", "brown", "beige"]
+        },
+        {
+          "type": "string",
+          "pattern": "^#([0-9a-fA-F]{3,4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$"
+        },
+        {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 4,
+          "items": { "type": "number", "minimum": 0, "maximum": 1 }
+        }
+      ]
+    },
+    "appearance": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "color": { "$ref": "#/$defs/color" },
+        "metallic": { "type": "number", "minimum": 0, "maximum": 1 },
+        "roughness": { "type": "number", "minimum": 0, "maximum": 1 },
+        "emission_color": { "$ref": "#/$defs/color" },
+        "emission_strength": { "type": "number", "minimum": 0, "maximum": 10000 }
+      }
+    },
+    "placement": {
+      "description": "Where an object sits. Prefer 'relative' — the layout solver computes coordinates, because language models place objects poorly in absolute space.",
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "position"],
+          "properties": {
+            "type": { "const": "at" },
+            "position": {
+              "type": "array",
+              "minItems": 2,
+              "maxItems": 2,
+              "items": { "type": "number", "minimum": -500, "maximum": 500 },
+              "description": "Ground-plane [x, y] in metres. Height is derived from the asset pivot."
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "ref", "direction", "distance"],
+          "properties": {
+            "type": { "const": "relative" },
+            "ref": { "$ref": "#/$defs/identifier" },
+            "direction": {
+              "enum": ["ahead", "behind", "left", "right", "north", "south", "east", "west"],
+              "description": "ahead/behind/left/right are in the reference object's local frame; compass directions are world-space."
+            },
+            "distance": { "$ref": "#/$defs/distance" }
+          }
+        }
+      ]
+    },
+    "action": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["actor", "type"],
+      "properties": {
+        "actor": { "$ref": "#/$defs/identifier" },
+        "type": { "enum": ["walk_to", "idle", "look_at", "present"] },
+        "target": {
+          "$ref": "#/$defs/identifier",
+          "description": "Required for walk_to, look_at, and present."
+        },
+        "stop_distance": {
+          "$ref": "#/$defs/distance",
+          "default": 1.5,
+          "description": "How far short of the target to stop, so the actor does not walk into it."
+        },
+        "start": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 600,
+          "default": 0,
+          "description": "Seconds from shot start."
+        },
+        "duration": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 600,
+          "default": 4
+        }
+      }
+    },
+    "camera": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type"],
+      "properties": {
+        "type": { "enum": ["follow", "static", "orbit"] },
+        "target": {
+          "$ref": "#/$defs/identifier",
+          "description": "Required for follow and orbit; optional aim point for static."
+        },
+        "position": {
+          "enum": ["behind", "front", "left", "right", "overhead"],
+          "default": "behind",
+          "description": "Placement relative to the target, for follow cameras."
+        },
+        "distance": { "$ref": "#/$defs/distance", "default": 6 },
+        "height": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100,
+          "default": 1.7,
+          "description": "Camera height above ground in metres."
+        },
+        "shot": {
+          "enum": ["wide", "medium", "close_up"],
+          "default": "medium",
+          "description": "Sets focal length: wide 24mm, medium 50mm, close_up 85mm."
+        }
+      }
+    },
+    "render": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["duration"],
+      "properties": {
+        "duration": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 600,
+          "description": "Shot length in seconds."
+        },
+        "fps": { "type": "integer", "minimum": 1, "maximum": 120, "default": 24 },
+        "resolution": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": { "type": "integer", "minimum": 16, "maximum": 7680 },
+          "default": [1280, 720]
+        },
+        "quality": {
+          "enum": ["preview", "final"],
+          "default": "preview",
+          "description": "preview uses EEVEE; final uses Cycles."
+        }
+      }
+    }
+  }
+}

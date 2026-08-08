@@ -1,0 +1,49 @@
+{
+  "kentsugi_version": "0.1.0",
+  "title": "Aura — Own the Moment",
+  "environment": {
+    "preset": "studio",
+    "time_of_day": "dusk",
+    "weather": "clear",
+    "ground_material": "concrete"
+  },
+  "objects": [
+    {
+      "id": "hero",
+      "asset": "human_character",
+      "placement": { "type": "at", "position": [-0.72, 0] },
+      "facing": 0
+    },
+    {
+      "id": "aura",
+      "asset": "aura_bottle",
+      "placement": { "type": "at", "position": [1.05, 0.15] },
+      "facing": 0,
+      "scale": 1.0
+    }
+  ],
+  "actions": [
+    {
+      "actor": "hero",
+      "type": "present",
+      "target": "aura",
+      "start": 0.35,
+      "duration": 2.8
+    }
+  ],
+  "camera": {
+    "type": "static",
+    "target": "aura",
+    "position": "front",
+    "distance": 7.4,
+    "height": 1.62,
+    "shot": "medium"
+  },
+  "render": {
+    "duration": 3.5,
+    "fps": 12,
+    "resolution": [480, 270],
+    "quality": "preview"
+  }
+}
+

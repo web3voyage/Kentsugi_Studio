@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kentsugi.local/schema/asset-recipe.schema.json",
+  "title": "Kentsugi parametric asset recipe",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["recipe_version", "id", "kind", "units", "bounds", "construction", "material"],
+  "properties": {
+    "recipe_version": { "const": "1.0" },
+    "id": { "type": "string", "pattern": "^[a-z][a-z0-9_]*$" },
+    "kind": { "type": "string", "enum": ["product", "prop", "character", "environment"] },
+    "units": { "const": "metres" },
+    "license": { "type": "string" },
+    "editable_parameters": {
+      "type": "object",
+      "description": "Human-readable controls and recommended ranges exposed by the recipe. Runtime values remain in the trusted asset catalog."
+    },
+    "source_evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["blend", "object"],
+      "properties": { "blend": { "type": "string" }, "object": { "type": "string" } }
+    },
+    "bounds": {
+      "type": "array", "minItems": 3, "maxItems": 3,
+      "items": { "type": "number", "exclusiveMinimum": 0 }
+    },
+    "construction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "axis", "segments", "profile", "details"],
+      "properties": {
+        "type": { "const": "radial_lathe" },
+        "axis": { "const": "z" },
+        "segments": { "type": "integer", "minimum": 12, "maximum": 256 },
+        "profile": {
+          "type": "array", "minItems": 2,
+          "items": { "type": "array", "minItems": 2, "maxItems": 2, "items": { "type": "number" } }
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object", "required": ["type", "z"],
+            "properties": {
+              "type": { "enum": ["lid", "pull_tab"] },
+              "z": { "type": "number" },
+              "radius": { "type": "number", "exclusiveMinimum": 0 },
+              "length": { "type": "number", "exclusiveMinimum": 0 }
+            }
+          }
+        }
+      }
+    },
+    "material": {
+      "type": "object", "required": ["fallback"],
+      "properties": {
+        "source_material": { "type": "string" },
+        "fallback": {
+          "type": "object", "required": ["base_color", "metallic", "roughness"],
+          "properties": {
+            "base_color": { "type": "array", "minItems": 3, "maxItems": 3, "items": { "type": "number", "minimum": 0, "maximum": 1 } },
+            "metallic": { "type": "number", "minimum": 0, "maximum": 1 },
+            "roughness": { "type": "number", "minimum": 0, "maximum": 1 }
+          }
+        },
+        "palette": {
+          "type": "array",
+          "items": { "type": "array", "minItems": 3, "maxItems": 3, "items": { "type": "number", "minimum": 0, "maximum": 1 } }
+        },
+        "textures": {
+          "type": "array",
+          "items": {
+            "type": "object", "required": ["role", "image", "size", "packed", "color_space"],
+            "properties": {
+              "role": { "enum": ["base_color", "height", "metallic", "normal", "roughness", "unclassified"] },
+              "image": { "type": "string" },
+              "size": { "type": "array", "minItems": 2, "maxItems": 2, "items": { "type": "integer", "minimum": 1 } },
+              "packed": { "type": "boolean" },
+              "color_space": { "type": "string" }
+            }
+          }
+        },
+        "uv_mapping": {
+          "type": "object", "required": ["type", "u_direction", "u_offset", "v_profile"],
+          "properties": {
+            "type": { "const": "cylindrical" },
+            "u_direction": { "enum": [-1, 1] },
+            "u_offset": { "type": "number" },
+            "fit_confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+            "v_profile": {
+              "type": "array",
+              "items": { "type": "array", "minItems": 2, "maxItems": 2, "items": { "type": "number" } }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+

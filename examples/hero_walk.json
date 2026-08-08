@@ -1,0 +1,48 @@
+{
+  "kentsugi_version": "0.1.0",
+  "title": "Kentsugi hero product walk",
+  "environment": {
+    "preset": "void",
+    "time_of_day": "day",
+    "weather": "clear",
+    "ground_material": "concrete"
+  },
+  "objects": [
+    {
+      "id": "hero",
+      "asset": "human_character",
+      "placement": { "type": "at", "position": [0, 0] },
+      "facing": "product"
+    },
+    {
+      "id": "product",
+      "asset": "crate",
+      "placement": { "type": "relative", "ref": "hero", "direction": "ahead", "distance": 3.2 }
+    }
+  ],
+  "actions": [
+    {
+      "actor": "hero",
+      "type": "walk_to",
+      "target": "product",
+      "stop_distance": 1.1,
+      "start": 0,
+      "duration": 1.5
+    }
+  ],
+  "camera": {
+    "type": "static",
+    "target": "hero",
+    "position": "front",
+    "distance": 5,
+    "height": 1.45,
+    "shot": "medium"
+  },
+  "render": {
+    "duration": 1.5,
+    "fps": 12,
+    "resolution": [320, 180],
+    "quality": "preview"
+  }
+}
+

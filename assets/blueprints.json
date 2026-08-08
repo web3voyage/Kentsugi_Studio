@@ -1,0 +1,72 @@
+{
+  "blueprint_registry_version": "0.1.0",
+  "blueprints": [
+    {
+      "id": "can_standard_v1",
+      "family": "can",
+      "variant": "standard_soda",
+      "category": "product",
+      "asset_id": "standard_soda_can",
+      "tags": ["can", "drink", "soda", "standard", "aluminium"],
+      "capabilities": ["parametric_shape", "pbr_material", "uv_mapping"],
+      "license": "Kentsugi project-generated",
+      "version": 1
+    },
+    {
+      "id": "can_tall_energy_v1",
+      "family": "can",
+      "variant": "tall_energy",
+      "category": "product",
+      "asset_id": "tall_energy_can",
+      "tags": ["can", "drink", "energy", "tall", "slim", "black", "green"],
+      "capabilities": ["parametric_shape", "pbr_material", "uv_mapping"],
+      "license": "Kentsugi project-generated",
+      "version": 1
+    },
+    {
+      "id": "bottle_luxury_v1",
+      "family": "bottle",
+      "variant": "luxury",
+      "category": "product",
+      "asset_id": "aura_bottle",
+      "tags": ["bottle", "perfume", "luxury", "glass", "advertisement"],
+      "capabilities": ["procedural_shape", "brand_text", "pbr_material"],
+      "license": "Kentsugi project-generated",
+      "version": 1
+    },
+    {
+      "id": "car_placeholder_v1",
+      "family": "car",
+      "variant": "generic",
+      "category": "vehicle",
+      "asset_id": "red_car",
+      "tags": ["car", "vehicle", "automotive", "red"],
+      "capabilities": ["static_geometry"],
+      "license": "CC0",
+      "version": 1
+    },
+    {
+      "id": "human_stylized_v1",
+      "family": "human",
+      "variant": "stylized",
+      "category": "character",
+      "asset_id": "human_character",
+      "tags": ["human", "person", "character", "boy", "girl", "stylized"],
+      "capabilities": ["rigged", "walk", "idle", "present"],
+      "license": "Kentsugi project-generated",
+      "version": 1
+    },
+    {
+      "id": "prop_generic_v1",
+      "family": "generic",
+      "variant": "generic",
+      "category": "prop",
+      "asset_id": "crate",
+      "tags": ["generic", "prop", "object"],
+      "capabilities": ["static_geometry"],
+      "license": "CC0",
+      "version": 1
+    }
+  ]
+}
+

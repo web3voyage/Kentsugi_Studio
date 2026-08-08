@@ -1,0 +1,58 @@
+{
+  "kentsugi_version": "0.1.0",
+  "title": "Rainy city at night",
+  "environment": {
+    "preset": "city",
+    "time_of_day": "night",
+    "weather": "rain",
+    "ground_material": "asphalt"
+  },
+  "objects": [
+    {
+      "id": "character_1",
+      "asset": "human_character",
+      "placement": { "type": "at", "position": [0, 0] },
+      "facing": "car_1"
+    },
+    {
+      "id": "car_1",
+      "asset": "red_car",
+      "placement": { "type": "relative", "ref": "character_1", "direction": "ahead", "distance": 9 },
+      "facing": 90
+    },
+    {
+      "id": "streetlight_1",
+      "asset": "streetlight",
+      "placement": { "type": "relative", "ref": "character_1", "direction": "right", "distance": 4 }
+    },
+    {
+      "id": "building_1",
+      "asset": "building_block",
+      "placement": { "type": "relative", "ref": "character_1", "direction": "left", "distance": 16 }
+    }
+  ],
+  "actions": [
+    {
+      "actor": "character_1",
+      "type": "walk_to",
+      "target": "car_1",
+      "stop_distance": 2.6,
+      "start": 0,
+      "duration": 6
+    }
+  ],
+  "camera": {
+    "type": "follow",
+    "target": "character_1",
+    "position": "behind",
+    "distance": 6,
+    "height": 1.8,
+    "shot": "medium"
+  },
+  "render": {
+    "duration": 6,
+    "fps": 24,
+    "resolution": [1280, 720],
+    "quality": "preview"
+  }
+}

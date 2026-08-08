@@ -1,0 +1,32 @@
+{
+  "kentsugi_version": "0.1.0",
+  "title": "Render smoke test",
+  "environment": {
+    "preset": "void",
+    "time_of_day": "day",
+    "weather": "clear",
+    "ground_material": "concrete"
+  },
+  "objects": [
+    {
+      "id": "product",
+      "asset": "crate",
+      "placement": {"type": "at", "position": [0, 0]}
+    }
+  ],
+  "actions": [],
+  "camera": {
+    "type": "orbit",
+    "target": "product",
+    "distance": 4,
+    "height": 2,
+    "shot": "medium"
+  },
+  "render": {
+    "duration": 0.0833333333,
+    "fps": 12,
+    "resolution": [320, 180],
+    "quality": "preview"
+  }
+}
+

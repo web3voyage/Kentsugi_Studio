@@ -1,0 +1,17 @@
+{
+  "blueprint_version": "0.1.0",
+  "id": "soda_can",
+  "name": "Soda can (procedural)",
+  "kind": "prop",
+  "size": [0.066, 0.066, 0.122],
+  "pivot": "base_center",
+  "radius": 0.038,
+  "color": [0.82, 0.04, 0.03, 1.0],
+  "license": "generated",
+  "operations": [
+    {"primitive": "cylinder", "dimensions": [0.066, 0.066, 0.115], "location": [0, 0, 0.0575], "material": {"base_color": [0.82, 0.04, 0.03, 1], "metallic": 0.75, "roughness": 0.24}},
+    {"primitive": "torus", "dimensions": [0.062, 0.062, 0.004], "location": [0, 0, 0.116], "material": {"base_color": [0.65, 0.67, 0.7, 1], "metallic": 0.9, "roughness": 0.18}},
+    {"primitive": "cylinder", "dimensions": [0.048, 0.048, 0.002], "location": [0, 0, 0.118], "material": {"base_color": [0.68, 0.7, 0.73, 1], "metallic": 0.9, "roughness": 0.18}},
+    {"primitive": "torus", "dimensions": [0.058, 0.058, 0.003], "location": [0, 0, 0.0015], "material": {"base_color": [0.62, 0.64, 0.68, 1], "metallic": 0.85, "roughness": 0.2}}
+  ]
+}

@@ -1,0 +1,26 @@
+# Blender 4.2.3 LTS MTL File: 'Soda Can.blend'
+# www.blender.org
+
+newmtl Soda_canyellow
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/soda_can_basecolor.png
+map_Ns C:/soda_can_roughness.png
+map_refl C:/soda_can_metallic.png
+map_Bump -bm 1.000000 C:/soda_can_normal.png
+
+newmtl soda_can
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/soda_can_basecolor.png
+map_Ns C:/soda_can_roughness.png
+map_refl C:/soda_can_metallic.png
+map_Bump -bm 1.000000 C:/soda_can_normal.png

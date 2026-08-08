@@ -1,0 +1,20 @@
+[project]
+name = "kentsugi"
+version = "0.1.0"
+description = "Prompt-driven 3D shot authoring: declarative scene documents rendered to video."
+requires-python = ">=3.11"
+dependencies = []
+
+# The core pipeline is deliberately dependency-free so it runs anywhere a
+# Python interpreter does. Blender is invoked as an external process rather
+# than imported, so `bpy` is never a package dependency.
+
+[project.scripts]
+kentsugi = "kentsugi.cli:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["kentsugi"]
